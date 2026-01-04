@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-#if !NET6_0_OR_GREATER
+#if NET35
 using System.Diagnostics;
 using MelonLoader;
 #endif
@@ -10,13 +10,15 @@ namespace MelonLoader.Utils
     public static class MelonEnvironment
     {
         private const string OurRuntimeName =
-#if !NET6_0_OR_GREATER
+#if NET35
             "net35";
+#elif NET6_0
+            "net6";
 #else
             "net8";
 #endif
 
-        public static bool IsDotnetRuntime { get; } = OurRuntimeName == "net8";
+        public static bool IsDotnetRuntime { get; } = OurRuntimeName == "net6" || OurRuntimeName == "net8";
         public static bool IsMonoRuntime { get; } = !IsDotnetRuntime;
 
         public static string MelonLoaderDirectory { get; internal set; }
